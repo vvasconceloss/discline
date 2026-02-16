@@ -3,5 +3,6 @@ name = "cli"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
+description.workspace = true
 
 [dependencies]
