@@ -7,3 +7,18 @@ version = "0.1.0"
 edition = "2024"
 authors = ["Victor Vasconcelos"]
 description = "A terminal client for Discord"
+
+[workspace.dependencies]
+serenity = "0.12"
+
+ratatui = "0.30.0"
+crossterm = "0.29.0"
+
+tokio = { version = "1.49.0", features = ["full"] }
+
+anyhow = "1.0"
+clap = { version = "4.5.58", features = ["derive"] }
+serde = { version = "1.0.228", features = ["derive"] }
+
+dirs = "6.0.0"
+config = "0.15.19"
