@@ -1,8 +1,8 @@
 [workspace]
 resolver = "1"
+members = ["crates/cli"]
 
-[package]
-name = "discline"
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
 authors = ["Victor Vasconcelos"]
