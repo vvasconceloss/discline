@@ -1,2 +1,9 @@
 [workspace]
 resolver = "1"
+
+[package]
+name = "discline"
+version = "0.1.0"
+edition = "2024"
+authors = ["Victor Vasconcelos"]
+description = "A terminal client for Discord"
