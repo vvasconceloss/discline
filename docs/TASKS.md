@@ -276,12 +276,12 @@ Each task is:
 - [ ] Print success confirmation
 - [ ] Handle errors gracefully
 
-**Success Criteria**: `cli send "#test" "Hello"` sends message
+**Success Criteria**: `discline send "#test" "Hello"` sends message
 
 **Example**:
 
 ```bash
-$ discord-cli send "#general" "Hello from CLI!"
+$ discline send "#general" "Hello from CLI!"
 ✓ Message sent to #general
 ```
 
@@ -303,7 +303,7 @@ $ discord-cli send "#general" "Hello from CLI!"
 - [ ] Add color coding for readability
 - [ ] Handle errors
 
-**Success Criteria**: `cli read "#test" --limit 10` displays messages
+**Success Criteria**: `discline read "#test" --limit 10` displays messages
 
 **Example Output**:
 

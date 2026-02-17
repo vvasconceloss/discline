@@ -163,7 +163,7 @@ impl MessageHistory {
 }
 ```
 
-**Dependencies**: discord-types, discord-client
+**Dependencies**: types, client
 
 **Size Goal**: ~300 lines total
 
@@ -217,7 +217,7 @@ pub async fn execute_monitor(
 }
 ```
 
-**Dependencies**: discord-types, discord-client, discord-state, clap
+**Dependencies**: types, client, state, clap
 
 **Size Goal**: ~400 lines total
 
@@ -287,7 +287,7 @@ pub struct MessageInput {
 └─────────────────────────────────────────────┘
 ```
 
-**Dependencies**: ratatui, crossterm, discord-types, discord-state
+**Dependencies**: ratatui, crossterm, types, state
 
 **Size Goal**: ~800 lines total (200 per component)
 
@@ -303,7 +303,7 @@ pub struct MessageInput {
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-#[command(name = "discord-cli")]
+#[command(name = "discline")]
 struct Cli {
     #[command(subcommand)]
     command: Option<Command>,
