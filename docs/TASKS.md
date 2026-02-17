@@ -48,8 +48,8 @@ Each task is:
 - [x] Define `Message` struct with serde
 - [x] Define `Channel` struct
 - [x] Define `User` struct
-- [ ] Add basic Display implementations
-- [ ] Write unit tests for type conversions
+- [x] Add basic Display implementations
+- [x] Write unit tests for type conversions
 
 **Success Criteria**: All types compile with serde, tests pass
 
