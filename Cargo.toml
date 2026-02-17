@@ -17,6 +17,7 @@ crossterm = "0.29.0"
 tokio = { version = "1.49.0", features = ["full"] }
 
 anyhow = "1.0"
+toml = "1.0.2"
 thiserror = "1.0.28"
 clap = { version = "4.5.58", features = ["derive"] }
 chrono = { version = "0.4.43", features = ["serde"] }
