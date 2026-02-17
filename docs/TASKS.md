@@ -39,7 +39,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 1 hour  
-**Files**: `crates/discord-types/lib.rs`  
+**Files**: `crates/types/lib.rs`  
 **Dependencies**: Task 1.1
 
 **Tasks**:
@@ -59,13 +59,13 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 1.5 hours  
-**Files**: `crates/discord-cli/config.rs`  
+**Files**: `crates/cli/config.rs`  
 **Dependencies**: Task 1.1
 
 **Tasks**:
 
 - [ ] Define `Config` struct with serde
-- [ ] Implement config file loading from `~/.config/discord-cli/config.toml`
+- [ ] Implement config file loading from `~/.config/cli/config.toml`
 - [ ] Implement environment variable override (`DISCORD_TOKEN`)
 - [ ] Add config validation
 - [ ] Create example config.toml
@@ -81,7 +81,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-client/rest.rs`  
+**Files**: `crates/client/rest.rs`  
 **Dependencies**: Task 1.2
 
 **Tasks**:
@@ -101,7 +101,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 1.5 hours  
-**Files**: `crates/discord-client/rest.rs`  
+**Files**: `crates/client/rest.rs`  
 **Dependencies**: Task 2.1
 
 **Tasks**:
@@ -122,7 +122,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 1.5 hours  
-**Files**: `crates/discord-client/rest.rs`  
+**Files**: `crates/client/rest.rs`  
 **Dependencies**: Task 2.1
 
 **Tasks**:
@@ -143,7 +143,7 @@ Each task is:
 
 **Priority**: P1 (High)  
 **Estimate**: 3 hours  
-**Files**: `crates/discord-client/gateway.rs`  
+**Files**: `crates/client/gateway.rs`  
 **Dependencies**: Task 1.2
 
 **Tasks**:
@@ -165,7 +165,7 @@ Each task is:
 
 **Priority**: P1 (High)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-client/gateway.rs`  
+**Files**: `crates/client/gateway.rs`  
 **Dependencies**: Task 2.4
 
 **Tasks**:
@@ -184,7 +184,7 @@ Each task is:
 
 **Priority**: P2 (Medium)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-client/cache.rs`  
+**Files**: `crates/client/cache.rs`  
 **Dependencies**: Task 1.2
 
 **Tasks**:
@@ -205,7 +205,7 @@ Each task is:
 
 **Priority**: P1 (High)  
 **Estimate**: 1.5 hours  
-**Files**: `crates/discord-state/session.rs`  
+**Files**: `crates/state/session.rs`  
 **Dependencies**: Task 1.2
 
 **Tasks**:
@@ -224,7 +224,7 @@ Each task is:
 
 **Priority**: P1 (High)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-state/history.rs`  
+**Files**: `crates/state/history.rs`  
 **Dependencies**: Task 2.6, Task 3.1
 
 **Tasks**:
@@ -245,7 +245,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 1 hour  
-**Files**: `crates/discord-cli/main.rs`  
+**Files**: `crates/cli/main.rs`  
 **Dependencies**: None
 
 **Tasks**:
@@ -264,7 +264,7 @@ Each task is:
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-cli-commands/send.rs`  
+**Files**: `crates/commands/send.rs`  
 **Dependencies**: Task 2.2, Task 4.1
 
 **Tasks**:
@@ -276,7 +276,7 @@ Each task is:
 - [ ] Print success confirmation
 - [ ] Handle errors gracefully
 
-**Success Criteria**: `discord-cli send "#test" "Hello"` sends message
+**Success Criteria**: `cli send "#test" "Hello"` sends message
 
 **Example**:
 
@@ -291,7 +291,7 @@ $ discord-cli send "#general" "Hello from CLI!"
 
 **Priority**: P0 (Blocker)  
 **Estimate**: 2 hours  
-**Files**: `crates/discord-cli-commands/read.rs`  
+**Files**: `crates/commands/read.rs`  
 **Dependencies**: Task 2.3, Task 4.1
 
 **Tasks**:
@@ -303,7 +303,7 @@ $ discord-cli send "#general" "Hello from CLI!"
 - [ ] Add color coding for readability
 - [ ] Handle errors
 
-**Success Criteria**: `discord-cli read "#test" --limit 10` displays messages
+**Success Criteria**: `cli read "#test" --limit 10` displays messages
 
 **Example Output**:
 
@@ -318,7 +318,7 @@ $ discord-cli send "#general" "Hello from CLI!"
 
 **Priority**: P1 (High)  
 **Estimate**: 2.5 hours  
-**Files**: `crates/discord-cli-commands/monitor.rs`  
+**Files**: `crates/commands/monitor.rs`  
 **Dependencies**: Task 2.5, Task 4.1
 
 **Tasks**:
@@ -348,7 +348,7 @@ Monitoring: #general, #dev
 
 **Priority**: P1 (High)  
 **Estimate**: 3 hours  
-**Files**: `crates/discord-tui/app.rs`  
+**Files**: `crates/tui/app.rs`  
 **Dependencies**: Task 2.4, Task 3.1
 
 **Tasks**:
@@ -368,7 +368,7 @@ Monitoring: #general, #dev
 
 **Priority**: P1 (High)  
 **Estimate**: 2.5 hours  
-**Files**: `crates/discord-tui/components/channel_list.rs`  
+**Files**: `crates/tui/components/channel_list.rs`  
 **Dependencies**: Task 5.1
 
 **Tasks**:
@@ -388,7 +388,7 @@ Monitoring: #general, #dev
 
 **Priority**: P1 (High)  
 **Estimate**: 3 hours  
-**Files**: `crates/discord-tui/components/message_list.rs`  
+**Files**: `crates/tui/components/message_list.rs`  
 **Dependencies**: Task 5.1, Task 2.3
 
 **Tasks**:
@@ -408,7 +408,7 @@ Monitoring: #general, #dev
 
 **Priority**: P1 (High)  
 **Estimate**: 2.5 hours  
-**Files**: `crates/discord-tui/components/input.rs`  
+**Files**: `crates/tui/components/input.rs`  
 **Dependencies**: Task 5.1, Task 2.2
 
 **Tasks**:
@@ -428,7 +428,7 @@ Monitoring: #general, #dev
 
 **Priority**: P1 (High)  
 **Estimate**: 3 hours  
-**Files**: `crates/discord-tui/app.rs`  
+**Files**: `crates/tui/app.rs`  
 **Dependencies**: Task 5.3, Task 2.5
 
 **Tasks**:
