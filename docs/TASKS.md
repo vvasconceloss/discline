@@ -44,12 +44,12 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Define `MessageId`, `ChannelId`, `UserId`, `GuildId` newtypes
-- [ ] Define `Message` struct with serde
-- [ ] Define `Channel` struct
-- [ ] Define `User` struct
-- [ ] Add basic Display implementations
-- [ ] Write unit tests for type conversions
+- [x] Define `MessageId`, `ChannelId`, `UserId`, `GuildId` newtypes
+- [x] Define `Message` struct with serde
+- [x] Define `Channel` struct
+- [x] Define `User` struct
+- [x] Add basic Display implementations
+- [x] Write unit tests for type conversions
 
 **Success Criteria**: All types compile with serde, tests pass
 

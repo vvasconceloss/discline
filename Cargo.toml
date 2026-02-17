@@ -19,6 +19,7 @@ tokio = { version = "1.49.0", features = ["full"] }
 anyhow = "1.0"
 thiserror = "1.0.28"
 clap = { version = "4.5.58", features = ["derive"] }
+chrono = { version = "0.4.43", features = ["serde"] }
 serde = { version = "1.0.228", features = ["derive"] }
 
 dirs = "6.0.0"
