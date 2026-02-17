@@ -1,5 +1,6 @@
+use dotenvy::dotenv;
 use serde::{Deserialize, Serialize};
-use std::{fs, path::PathBuf};
+use std::{fs, io::Error};
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AuthConfig {
@@ -24,18 +25,32 @@ pub struct Config {
     pub cache: CacheConfig,
 }
 
-pub fn load_config() -> Config {
-    let config_path = dirs::home_dir()
-        .unwrap_or_else(|| PathBuf::from("."))
-        .join(".config")
-        .join("discline")
-        .join("config.toml");
+impl Default for Config {
+    fn default() -> Self {
+        Config {
+            auth: AuthConfig {
+                token: String::new(),
+            },
+            ui: UiConfig {
+                theme: String::new(),
+                vim_mode: false,
+            },
+            cache: CacheConfig { max_messages: 100 },
+        }
+    }
+}
 
-    let content = fs::read_to_string(&config_path)
-        .unwrap_or_else(|_| panic!("Config not found at {:?}", config_path));
+pub fn load_config() -> Result<Config, Error> {
+    let _ = dotenv();
 
-    let config: Config =
-        toml::from_str(&content).expect("config.toml has invalid format or missing fields");
+    let config_path = dirs::config_dir().map(|path| path.join("discline/config.toml"));
 
-    config
+    let config = if let Some(path) = config_path.filter(|path| path.exists()) {
+        let content = fs::read_to_string(&path).unwrap();
+        toml::from_str(&content).unwrap()
+    } else {
+        Config::default()
+    };
+
+    Ok(config)
 }
