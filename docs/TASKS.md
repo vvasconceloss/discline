@@ -65,7 +65,7 @@ Each task is:
 **Tasks**:
 
 - [ ] Define `Config` struct with serde
-- [ ] Implement config file loading from `~/.config/cli/config.toml`
+- [ ] Implement config file loading from `~/.config/discline/config.toml`
 - [ ] Implement environment variable override (`DISCORD_TOKEN`)
 - [ ] Add config validation
 - [ ] Create example config.toml

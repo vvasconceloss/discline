@@ -420,7 +420,7 @@ pub enum ApiError {
 
 ## Configuration Management
 
-**Config file**: `~/.config/discord-cli/config.toml`
+**Config file**: `~/.config/discline/config.toml`
 
 ```rust
 use serde::{Deserialize, Serialize};
