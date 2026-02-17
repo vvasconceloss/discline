@@ -1,6 +1,8 @@
 use dotenvy::dotenv;
 use serde::{Deserialize, Serialize};
-use std::{fs, io::Error};
+use std::fs;
+
+use crate::errors::ConfigError;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct AuthConfig {
@@ -32,7 +34,7 @@ impl Default for Config {
                 token: String::new(),
             },
             ui: UiConfig {
-                theme: String::new(),
+                theme: "default".to_string(),
                 vim_mode: false,
             },
             cache: CacheConfig { max_messages: 100 },
@@ -40,17 +42,29 @@ impl Default for Config {
     }
 }
 
-pub fn load_config() -> Result<Config, Error> {
+pub fn load_config() -> Result<Config, ConfigError> {
     let _ = dotenv();
 
-    let config_path = dirs::config_dir().map(|path| path.join("discline/config.toml"));
+    let config_path = dirs::config_dir()
+        .map(|path| path.join("discline/config.toml"))
+        .ok_or(ConfigError::NoConfigDir)?;
 
-    let config = if let Some(path) = config_path.filter(|path| path.exists()) {
-        let content = fs::read_to_string(&path).unwrap();
-        toml::from_str(&content).unwrap()
+    let mut config = if config_path.exists() {
+        let content = fs::read_to_string(&config_path)?;
+        toml::from_str(&content)?
     } else {
         Config::default()
     };
+
+    if config.auth.token.is_empty() {
+        if let Ok(token) = std::env::var("DISCORD_TOKEN") {
+            config.auth.token = token;
+        }
+    }
+
+    if config.auth.token.is_empty() {
+        return Err(ConfigError::MissingToken);
+    }
 
     Ok(config)
 }
