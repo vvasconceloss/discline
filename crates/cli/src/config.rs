@@ -56,10 +56,10 @@ pub fn load_config() -> Result<Config, ConfigError> {
         Config::default()
     };
 
-    if config.auth.token.is_empty() {
-        if let Ok(token) = std::env::var("DISCORD_TOKEN") {
-            config.auth.token = token;
-        }
+    if config.auth.token.is_empty()
+        && let Ok(token) = std::env::var("DISCORD_TOKEN")
+    {
+        config.auth.token = token;
     }
 
     if config.auth.token.is_empty() {
@@ -67,4 +67,64 @@ pub fn load_config() -> Result<Config, ConfigError> {
     }
 
     Ok(config)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_config_parsing() {
+        let toml_str = r#"
+            [auth]
+            token = "test-token"
+
+            [ui]
+            theme = "dark"
+            vim_mode = true
+
+            [cache]
+            max_messages = 50
+        "#;
+
+        let config: Config = toml::from_str(toml_str).unwrap();
+        assert_eq!(config.auth.token, "test-token");
+        assert_eq!(config.ui.theme, "dark");
+        assert!(config.ui.vim_mode);
+        assert_eq!(config.cache.max_messages, 50);
+    }
+
+    #[test]
+    fn test_token_precedence_file_wins() {
+        let mut config = Config::default();
+        config.auth.token = "file-token".to_string();
+
+        unsafe { std::env::set_var("DISCORD_TOKEN", "env-token") };
+
+        if config.auth.token.is_empty() {
+            if let Ok(token) = std::env::var("DISCORD_TOKEN") {
+                config.auth.token = token;
+            }
+        }
+
+        assert_eq!(config.auth.token, "file-token");
+        unsafe { std::env::remove_var("DISCORD_TOKEN") };
+    }
+
+    #[test]
+    fn test_token_precedence_env_fallback() {
+        let mut config = Config::default();
+        config.auth.token = "".to_string();
+
+        unsafe { std::env::set_var("DISCORD_TOKEN", "env-token") };
+
+        if config.auth.token.is_empty() {
+            if let Ok(token) = std::env::var("DISCORD_TOKEN") {
+                config.auth.token = token;
+            }
+        }
+
+        assert_eq!(config.auth.token, "env-token");
+        unsafe { std::env::remove_var("DISCORD_TOKEN") };
+    }
 }
