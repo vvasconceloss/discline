@@ -89,7 +89,7 @@ Each task is:
 - [ ] Create `RestClient` struct with reqwest
 - [ ] Implement authentication headers
 - [ ] Add base URL configuration
-- [ ] Implement error type (`ApiError`)
+- [ ] Implement error type (`ClientError`)
 - [ ] Add rate limit handling (basic)
 - [ ] Write connection test
 
