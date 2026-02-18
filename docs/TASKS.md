@@ -86,12 +86,12 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Create `RestClient` struct with reqwest
-- [ ] Implement authentication headers
-- [ ] Add base URL configuration
-- [ ] Implement error type (`ClientError`)
-- [ ] Add rate limit handling (basic)
-- [ ] Write connection test
+- [x] Create `RestClient` struct with reqwest
+- [x] Implement authentication headers
+- [x] Add base URL configuration
+- [x] Implement error type (`ClientError`)
+- [x] Add rate limit handling (basic)
+- [x] Write connection test
 
 **Success Criteria**: Can create authenticated client, handles 401 errors
 
