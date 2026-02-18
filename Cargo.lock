@@ -137,6 +137,7 @@ name = "client"
 version = "0.1.0"
 dependencies = [
  "reqwest",
+ "serde",
  "thiserror 1.0.69",
  "types",
 ]
