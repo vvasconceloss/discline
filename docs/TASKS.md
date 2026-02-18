@@ -64,12 +64,12 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Define `Config` struct with serde
-- [ ] Implement config file loading from `~/.config/discline/config.toml`
-- [ ] Implement environment variable override (`DISCORD_TOKEN`)
-- [ ] Add config validation
-- [ ] Create example config.toml
-- [ ] Write tests for config loading precedence
+- [x] Define `Config` struct with serde
+- [x] Implement config file loading from `~/.config/discline/config.toml`
+- [x] Implement environment variable override (`DISCORD_TOKEN`)
+- [x] Add config validation
+- [x] Create example config.toml
+- [x] Write tests for config loading precedence
 
 **Success Criteria**: Config loads from file OR env var, validates token exists
 
