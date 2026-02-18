@@ -1,5 +1,5 @@
-use anyhow::{Context, Result};
 use crate::config::load_config;
+use anyhow::{Context, Result};
 
 pub mod config;
 pub mod errors;
