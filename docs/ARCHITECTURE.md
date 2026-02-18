@@ -409,12 +409,12 @@ pub async fn send_message(content: &str) -> Result<()> {
 use thiserror::Error;
 
 #[derive(Error, Debug)]
-pub enum ApiError {
-    #[error("Rate limited: retry after {0}s")]
-    RateLimited(u64),
-
+pub enum ClientError {
     #[error("Network error: {0}")]
     Network(#[from] reqwest::Error),
+
+    #[error("Rate limited: Retry after {retry_after} seconds")]
+    RateLimited { retry_after: u64 },
 }
 ```
 
