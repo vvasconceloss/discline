@@ -1,0 +1,9 @@
+[auth]
+token = "YOUR_DISCORD_TOKEN"
+
+[ui]
+theme = "dark"
+vim_mode = true
+
+[cache]
+max_messages = 100

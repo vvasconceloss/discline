@@ -64,12 +64,12 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Define `Config` struct with serde
-- [ ] Implement config file loading from `~/.config/cli/config.toml`
-- [ ] Implement environment variable override (`DISCORD_TOKEN`)
-- [ ] Add config validation
-- [ ] Create example config.toml
-- [ ] Write tests for config loading precedence
+- [x] Define `Config` struct with serde
+- [x] Implement config file loading from `~/.config/discline/config.toml`
+- [x] Implement environment variable override (`DISCORD_TOKEN`)
+- [x] Add config validation
+- [x] Create example config.toml
+- [x] Write tests for config loading precedence
 
 **Success Criteria**: Config loads from file OR env var, validates token exists
 
@@ -276,12 +276,12 @@ Each task is:
 - [ ] Print success confirmation
 - [ ] Handle errors gracefully
 
-**Success Criteria**: `cli send "#test" "Hello"` sends message
+**Success Criteria**: `discline send "#test" "Hello"` sends message
 
 **Example**:
 
 ```bash
-$ discord-cli send "#general" "Hello from CLI!"
+$ discline send "#general" "Hello from CLI!"
 ✓ Message sent to #general
 ```
 
@@ -303,7 +303,7 @@ $ discord-cli send "#general" "Hello from CLI!"
 - [ ] Add color coding for readability
 - [ ] Handle errors
 
-**Success Criteria**: `cli read "#test" --limit 10` displays messages
+**Success Criteria**: `discline read "#test" --limit 10` displays messages
 
 **Example Output**:
 
