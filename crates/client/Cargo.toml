@@ -6,3 +6,9 @@ authors.workspace = true
 description.workspace = true
 
 [dependencies]
+types = { path = "../types" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+reqwest = { workspace = true }
+thiserror = { workspace = true }
