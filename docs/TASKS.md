@@ -106,11 +106,11 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Implement `send_message(channel_id, content)`
-- [ ] Validate message length (≤ 2000 chars)
-- [ ] Handle Discord API errors
-- [ ] Add retry logic for 5xx errors
-- [ ] Write integration test (with test token)
+- [x] Implement `send_message(channel_id, content)`
+- [x] Validate message length (≤ 2000 chars)
+- [x] Handle Discord API errors
+- [x] Add retry logic for 5xx errors
+- [x] Write integration test (with test token)
 
 **Success Criteria**: Can send message to test channel
 
