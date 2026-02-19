@@ -100,11 +100,16 @@ impl HttpClient {
         }
     }
 
-    pub async fn request<T: DeserializeOwned, B: serde::Serialize + Clone + std::marker::Copy>(
+    pub async fn request<
+        T: DeserializeOwned,
+        B: serde::Serialize + Clone + std::marker::Copy,
+        Q: serde::Serialize,
+    >(
         &self,
         method: Method,
         endpoint: &str,
         body: Option<B>,
+        query: Option<Q>,
     ) -> Result<T, ClientError> {
         let url = format!("{}/{}", self.base_url(), endpoint.trim_start_matches('/'));
 
@@ -113,6 +118,10 @@ impl HttpClient {
 
             if let Some(b) = body {
                 request = request.json(&b);
+            }
+
+            if let Some(q) = &query {
+                request = request.query(&q);
             }
 
             let response = match request.send().await {
