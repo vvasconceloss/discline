@@ -52,6 +52,10 @@ impl RestClient for HttpClient {
             content: &'a str,
         }
 
+        if content.len() > 2000 {
+            return Err(ClientError::MessageTooLong);
+        }
+
         self.request(Method::POST, &endpoint, Some(SendMessageBody { content }))
             .await
     }
