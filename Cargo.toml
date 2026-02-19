@@ -26,5 +26,6 @@ chrono = { version = "0.4.43", features = ["serde"] }
 serde = { version = "1.0.228", features = ["derive"] }
 
 dirs = "6.0.0"
+mockito = "1.7.2"
 config = "0.15.19"
 dotenvy = "0.15.7"
