@@ -19,11 +19,16 @@ reqwest = { version = "0.13", features = ["json"] }
 
 anyhow = "1.0"
 toml = "1.0.2"
+rand = "0.10.0"
 thiserror = "1.0.28"
+
 clap = { version = "4.5.58", features = ["derive"] }
 chrono = { version = "0.4.43", features = ["serde"] }
+
+serde_json = "1.0.149"
 serde = { version = "1.0.228", features = ["derive"] }
 
 dirs = "6.0.0"
+mockito = "1.7.2"
 config = "0.15.19"
 dotenvy = "0.15.7"

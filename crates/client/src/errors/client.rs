@@ -25,4 +25,7 @@ pub enum ClientError {
 
     #[error("Failed to parse response: {0}")]
     ParseError(String),
+
+    #[error("Message too long: Maximum length is 2000 characters")]
+    MessageTooLong,
 }
