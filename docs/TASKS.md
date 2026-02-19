@@ -127,11 +127,11 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Implement `get_messages(channel_id, limit)`
-- [ ] Parse response into `Vec<Message>`
-- [ ] Handle pagination params
-- [ ] Add sorting (newest first)
-- [ ] Write integration test
+- [x] Implement `get_messages(channel_id, limit)`
+- [x] Parse response into `Vec<Message>`
+- [x] Handle pagination params
+- [x] Add sorting (newest first)
+- [x] Write integration test
 
 **Success Criteria**: Can fetch last 50 messages from test channel
 
