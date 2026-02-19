@@ -57,6 +57,10 @@ impl HttpClient {
         &self.base_url
     }
 
+    pub fn set_base_url(&mut self, url: String) {
+        self.base_url = url;
+    }
+
     pub async fn wait(&self, attempt: u32) {
         let backoff = Self::INITIAL_BACKOFF_MS * 2u64.pow(attempt);
         let jitter = rand::rng().random_range(0..100);
