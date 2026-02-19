@@ -1,8 +1,11 @@
+use rand::RngExt;
 use reqwest::{
-    Client, Method, StatusCode,
+    Client, Method, Response, StatusCode,
     header::{AUTHORIZATION, HeaderMap, HeaderValue, USER_AGENT},
 };
 use serde::de::DeserializeOwned;
+use std::time::Duration;
+use tokio::time::sleep;
 
 use crate::errors::client::ClientError;
 
@@ -14,6 +17,9 @@ pub struct HttpClient {
 }
 
 impl HttpClient {
+    const MAX_RETRIES: u32 = 3;
+    const INITIAL_BACKOFF_MS: u64 = 1000;
+
     const BASE_URL: &str = "https://discord.com/api/v10";
     const USER_AGENT_VALUE: &str = "DiscordBot (https://github.com/ovasconcelos/discline, 0.1.0)";
 
@@ -51,27 +57,19 @@ impl HttpClient {
         &self.base_url
     }
 
-    pub async fn request<T: DeserializeOwned, B: serde::Serialize>(
+    pub async fn wait(&self, attempt: u32) {
+        let backoff = Self::INITIAL_BACKOFF_MS * 2u64.pow(attempt);
+        let jitter = rand::rng().random_range(0..100);
+
+        sleep(Duration::from_millis(backoff + jitter)).await;
+    }
+
+    pub async fn handle_error_status<T: DeserializeOwned>(
         &self,
-        method: Method,
-        endpoint: &str,
-        body: Option<B>,
+        status: StatusCode,
+        response: Response,
     ) -> Result<T, ClientError> {
-        let url = format!("{}/{}", self.base_url(), endpoint.trim_start_matches('/'));
-        let mut request = self.http().request(method, &url);
-
-        if let Some(b) = body {
-            request = request.json(&b);
-        }
-
-        let response = request.send().await?;
-        let status = response.status();
-
         match status {
-            StatusCode::OK | StatusCode::CREATED => response
-                .json::<T>()
-                .await
-                .map_err(|e| ClientError::ParseError(e.to_string())),
             StatusCode::UNAUTHORIZED => Err(ClientError::Unauthorized),
             StatusCode::FORBIDDEN => Err(ClientError::Forbidden),
             StatusCode::NOT_FOUND => Err(ClientError::NotFound {
@@ -96,6 +94,53 @@ impl HttpClient {
                 })
             }
         }
+    }
+
+    pub async fn request<T: DeserializeOwned, B: serde::Serialize + Clone + std::marker::Copy>(
+        &self,
+        method: Method,
+        endpoint: &str,
+        body: Option<B>,
+    ) -> Result<T, ClientError> {
+        let url = format!("{}/{}", self.base_url(), endpoint.trim_start_matches('/'));
+
+        for attempt in 0..Self::MAX_RETRIES {
+            let mut request = self.http().request(method.clone(), &url);
+
+            if let Some(b) = body {
+                request = request.json(&b);
+            }
+
+            let response = match request.send().await {
+                Ok(res) => res,
+                Err(_e) if attempt < Self::MAX_RETRIES - 1 => {
+                    self.wait(attempt).await;
+                    continue;
+                }
+                Err(e) => return Err(ClientError::Network(e)),
+            };
+
+            let status = response.status();
+
+            if status.is_success() {
+                return response
+                    .json::<T>()
+                    .await
+                    .map_err(|e| ClientError::ParseError(e.to_string()));
+            }
+
+            if status.is_server_error() && attempt < Self::MAX_RETRIES - 1 {
+                self.wait(attempt).await;
+                continue;
+            }
+
+            return self.handle_error_status(status, response).await;
+        }
+
+        Err(ClientError::ApiError {
+            status: 500,
+            message: "Max retries reached".into(),
+        })
     }
 }
 
