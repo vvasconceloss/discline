@@ -47,7 +47,7 @@ impl RestClient for HttpClient {
     ) -> Result<Message, ClientError> {
         let endpoint = format!("/channels/{}/messages", channel_id);
 
-        #[derive(serde::Serialize)]
+        #[derive(serde::Serialize, Clone, Copy)]
         struct SendMessageBody<'a> {
             content: &'a str,
         }
