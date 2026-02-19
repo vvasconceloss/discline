@@ -1,6 +1,7 @@
 use chrono::Utc;
 use client::client::HttpClient;
 use client::errors::client::ClientError;
+use client::queries::GetMessagesQuery;
 use client::traits::rest_client::RestClient;
 use mockito::Server;
 use types::channel::ChannelId;
@@ -107,4 +108,60 @@ async fn test_send_message_retry_success() {
 
     assert!(result.is_ok());
     assert_eq!(result.unwrap().content, content);
+}
+
+#[tokio::test]
+async fn test_get_messages_success() {
+    let mut server = Server::new_async().await;
+    let channel_id = ChannelId(456);
+
+    let mock_messages = vec![
+        Message {
+            id: 10.into(),
+            author: User {
+                id: 1.into(),
+                username: "testuser".into(),
+                discriminator: "0000".into(),
+                global_name: None,
+                email: "test@test.com".into(),
+            },
+            content: "Message 1".into(),
+            channel_id,
+            timestamp: Utc::now(),
+        },
+        Message {
+            id: 11.into(),
+            author: User {
+                id: 1.into(),
+                username: "testuser".into(),
+                discriminator: "0000".into(),
+                global_name: None,
+                email: "test@test.com".into(),
+            },
+            content: "Message 2".into(),
+            channel_id,
+            timestamp: Utc::now(),
+        },
+    ];
+
+    let _m = server
+        .mock("GET", "/channels/456/messages?limit=2")
+        .with_status(200)
+        .with_header("content-type", "application/json")
+        .with_body(serde_json::to_string(&mock_messages).unwrap())
+        .create_async()
+        .await;
+
+    let mut client = HttpClient::new("test-token".into());
+    client.set_base_url(server.url());
+
+    let result = client
+        .get_messages(channel_id, GetMessagesQuery::with_limit(2))
+        .await;
+
+    assert!(result.is_ok());
+    let msgs = result.unwrap();
+    assert_eq!(msgs.len(), 2);
+    assert_eq!(msgs[0].content, "Message 1");
+    assert_eq!(msgs[1].content, "Message 2");
 }
