@@ -6,7 +6,7 @@ use types::{
     message::Message,
 };
 
-use crate::{client::HttpClient, errors::client::ClientError};
+use crate::{client::HttpClient, errors::client::ClientError, queries::GetMessagesQuery};
 
 pub trait RestClient {
     fn get_channels(
@@ -16,7 +16,7 @@ pub trait RestClient {
     fn get_messages(
         &self,
         channel_id: ChannelId,
-        limit: u8,
+        query: GetMessagesQuery,
     ) -> impl Future<Output = Result<Vec<Message>, ClientError>> + Send;
     fn send_message(
         &self,
@@ -28,16 +28,18 @@ pub trait RestClient {
 impl RestClient for HttpClient {
     async fn get_channels(&self, guild_id: GuildId) -> Result<Vec<Channel>, ClientError> {
         let endpoint = format!("/guilds/{}/channels", guild_id);
-        self.request(Method::GET, &endpoint, None::<()>).await
+        self.request(Method::GET, &endpoint, None::<()>, None::<()>)
+            .await
     }
 
     async fn get_messages(
         &self,
         channel_id: ChannelId,
-        limit: u8,
+        query: GetMessagesQuery,
     ) -> Result<Vec<Message>, ClientError> {
-        let endpoint = format!("/channels/{}/messages?limit={}", channel_id, limit);
-        self.request(Method::GET, &endpoint, None::<()>).await
+        let endpoint = format!("/channels/{}/messages", channel_id);
+        self.request(Method::GET, &endpoint, None::<()>, Some(query))
+            .await
     }
 
     async fn send_message(
@@ -56,8 +58,13 @@ impl RestClient for HttpClient {
             return Err(ClientError::MessageTooLong);
         }
 
-        self.request(Method::POST, &endpoint, Some(SendMessageBody { content }))
-            .await
+        self.request(
+            Method::POST,
+            &endpoint,
+            Some(SendMessageBody { content }),
+            None::<()>,
+        )
+        .await
     }
 }
 
