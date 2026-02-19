@@ -166,10 +166,12 @@ dependencies = [
 name = "client"
 version = "0.1.0"
 dependencies = [
+ "chrono",
  "mockito",
  "rand 0.10.0",
  "reqwest",
  "serde",
+ "serde_json",
  "thiserror 1.0.69",
  "tokio",
  "types",
