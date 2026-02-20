@@ -17,4 +17,7 @@ pub enum GatewayError {
 
     #[error("Gateway protocol error: {0}")]
     ProtocolError(String),
+
+    #[error("Reconnect required")]
+    ReconnectRequired,
 }
