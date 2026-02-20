@@ -148,12 +148,12 @@ Each task is:
 
 **Tasks**:
 
-- [ ] Implement WebSocket connection to Discord Gateway
-- [ ] Handle HELLO and READY events
-- [ ] Implement heartbeat mechanism
-- [ ] Add reconnection logic
-- [ ] Define `Event` enum for common events
-- [ ] Write connection test
+- [x] Implement WebSocket connection to Discord Gateway
+- [x] Handle HELLO and READY events
+- [x] Implement heartbeat mechanism
+- [x] Add reconnection logic
+- [x] Define `Event` enum for common events
+- [x] Write connection test
 
 **Success Criteria**: Can connect, maintain heartbeat, receive READY event
 
